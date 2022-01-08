@@ -5,4 +5,4 @@
 API for register climb routes. Setting name, description, grade, área, etc  for recopilate data useful para watch progress over time, statistics or climb equipment use. 
 
 ## Tech Description
-Docker container with Go and MYSQL
+Docker containers with Go and MYSQL
