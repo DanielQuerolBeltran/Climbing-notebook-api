@@ -4,10 +4,12 @@ import (
 	"net/http"
 
 	entities "github.com/DanielQuerolBeltran/Climbing-notebook-api/internal/platform"
+	service "github.com/DanielQuerolBeltran/Climbing-notebook-api/internal/services"
 	"github.com/gin-gonic/gin"
 )
 
 type createRequest struct {
+	Id     string `json:"id"`
 	Description     string `json:"description"`
 	Area string `json:"area" binding:"required"`
 	Grade string `json:"grade" binding:"required"`
@@ -22,8 +24,8 @@ func CreateHandler(climbRepository entities.ClimbRepository) gin.HandlerFunc {
 			return
 		}
 
-		climb, err := entities.NewClimb(
-			"",
+		climb, err := service.NewSaveClimbService(climbRepository).Execute(
+			ctx,
 			req.Date,
 			req.Grade,
 			req.Description,
@@ -35,11 +37,12 @@ func CreateHandler(climbRepository entities.ClimbRepository) gin.HandlerFunc {
 			return
 		}
 
-		if err := climbRepository.Save(ctx, climb); err != nil {
-			ctx.JSON(http.StatusInternalServerError, err.Error())
-			return
-		}
-
-		ctx.Status(http.StatusCreated)
+		ctx.JSON(http.StatusCreated, createRequest{
+			Id: climb.Id().String(),
+			Description: climb.Description().String(),
+			Area: climb.Area().String(),
+			Grade: climb.Grade().String(),
+			Date: climb.Date().String(),
+		})
 	}
 }

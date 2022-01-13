@@ -12,12 +12,8 @@ type ClimbId struct {
 	value string
 }
 
-func newClimbId(value string) ClimbId {
-	if value == "" {
-		return ClimbId{value: uuid.NewString()}
-	}
-
-	return ClimbId{value: value}
+func NewClimbId() ClimbId {
+	return ClimbId{value: uuid.NewString()}
 }
 
 func (id ClimbId) String() string {
@@ -95,7 +91,7 @@ type ClimbRepository interface {
 }
 
 func NewClimb(id string, date string, grade string, description string, area string) (Climb, error) {
-	idV0 := newClimbId(id)
+	idV0 :=  ClimbId{value: id}
 	
 	dateV0, err := newClimbDate(date)
 	if err != nil {

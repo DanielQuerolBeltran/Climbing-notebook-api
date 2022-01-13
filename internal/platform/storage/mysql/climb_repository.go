@@ -1,11 +1,12 @@
 package mysql
 
 import (
+	"context"
 	"database/sql"
 	"fmt"
-	"context"
-	"github.com/huandu/go-sqlbuilder"
+
 	"github.com/DanielQuerolBeltran/Climbing-notebook-api/internal/platform"
+	"github.com/huandu/go-sqlbuilder"
 )
 
 
